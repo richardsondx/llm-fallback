@@ -1,5 +1,5 @@
 /**
- * llm-fallback: your LLM provider will go down. Your app shouldn't.
+ * fallback-llm: your LLM provider will go down. Your app shouldn't.
  *
  * Provider-agnostic retry + failover with correct error classification,
  * exponential backoff with jitter, per-provider circuit breaking, and

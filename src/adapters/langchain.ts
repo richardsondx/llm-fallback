@@ -4,7 +4,7 @@
  * Wraps an ordered list of runnables (or anything with .invoke) so a call
  * retries and fails over across them with the standard error taxonomy:
  *
- *   import { withFallbackRunnable } from "llm-fallback/adapters/langchain";
+ *   import { withFallbackRunnable } from "fallback-llm/adapters/langchain";
  *
  *   const chain = withFallbackRunnable(
  *     [
@@ -36,7 +36,7 @@ export function withFallbackRunnable<I = unknown, O = unknown>(
   options: FallbackOptions = {}
 ): FallbackRunnable<I, O> {
   if (runnables.length === 0) {
-    throw new Error("llm-fallback: runnables must not be empty.");
+    throw new Error("fallback-llm: runnables must not be empty.");
   }
   const providers: Provider[] = runnables.map((r, i) => ({
     name: r.name ?? `runnable-${i + 1}`

@@ -50,7 +50,7 @@ async function runWithBreakers<T>(
   breakers: Map<string, CircuitBreaker>
 ): Promise<T> {
   if (providers.length === 0) {
-    throw new Error("llm-fallback: providers must not be empty.");
+    throw new Error("fallback-llm: providers must not be empty.");
   }
   const ctx: RunContext = {
     retry: resolveRetryPolicy(options.retry),
@@ -120,7 +120,7 @@ async function runWithBreakers<T>(
   throw lastError instanceof Error
     ? lastError
     : new Error(
-        `llm-fallback: all providers exhausted (${attempted.join(", ")}).`
+        `fallback-llm: all providers exhausted (${attempted.join(", ")}).`
       );
 }
 

@@ -5,7 +5,7 @@
  * failover across your provider list. Use with wrapLanguageModel:
  *
  *   import { wrapLanguageModel } from "ai";
- *   import { fallbackMiddleware } from "llm-fallback/adapters/ai-sdk";
+ *   import { fallbackMiddleware } from "fallback-llm/adapters/ai-sdk";
  *
  *   const model = wrapLanguageModel({
  *     model: openai("gpt-4o"),

@@ -1,5 +1,5 @@
 /**
- * Public types for llm-fallback.
+ * Public types for fallback-llm.
  *
  * The library is intentionally provider-agnostic: a "provider" is just a
  * labeled entry, and your `call` function decides what to do with it. This

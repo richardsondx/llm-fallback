@@ -1,11 +1,11 @@
-# llm-fallback
+# fallback-llm
 
 **Your LLM provider will go down. Your app shouldn't.**
 
-`llm-fallback` is a tiny, provider-agnostic retry + failover wrapper for LLM calls. It classifies errors correctly (retry the transient, fail over the provider-level, never retry the fatal), backs off with jitter, breaks circuits per provider, and passes streams through untouched. Zero dependencies.
+`fallback-llm` is a tiny, provider-agnostic retry + failover wrapper for LLM calls. It classifies errors correctly (retry the transient, fail over the provider-level, never retry the fatal), backs off with jitter, breaks circuits per provider, and passes streams through untouched. Zero dependencies.
 
 ```ts
-import { withFallback } from "llm-fallback";
+import { withFallback } from "fallback-llm";
 
 const answer = await withFallback(
   [{ name: "openai" }, { name: "anthropic" }, { name: "openrouter" }],
@@ -33,7 +33,7 @@ Unknown errors are treated as transient (attempts are bounded, failover follows)
 ## Install
 
 ```bash
-npm install @richardsondx/llm-fallback
+npm install fallback-llm
 ```
 
 ## Usage
@@ -41,7 +41,7 @@ npm install @richardsondx/llm-fallback
 ### Basic
 
 ```ts
-import { withFallback } from "llm-fallback";
+import { withFallback } from "fallback-llm";
 
 const text = await withFallback(
   [{ name: "openai", model: "gpt-4o" }, { name: "anthropic", model: "claude-sonnet-4-5" }],
@@ -62,7 +62,7 @@ const text = await withFallback(
 ### Reusable caller (keeps circuit-breaker state across calls)
 
 ```ts
-import { createFallbackCaller } from "llm-fallback";
+import { createFallbackCaller } from "fallback-llm";
 
 const ask = createFallbackCaller(providers, options);
 const answer = await ask((p) => myCall(p, prompt));
@@ -75,7 +75,7 @@ Circuit breakers open after 5 consecutive provider-level failures (configurable)
 Streams pass through untouched: only the initial call is protected, so there is no buffering and no latency cost. Mid-stream failures cannot be transparently failed over (bytes already left), but you can observe them:
 
 ```ts
-import { withFallback, observeStream } from "llm-fallback";
+import { withFallback, observeStream } from "fallback-llm";
 
 const stream = await withFallback(providers, (p) => startStream(p), options);
 const observed = observeStream(stream, {
@@ -89,7 +89,7 @@ For async-iterable stream shapes (Anthropic/OpenAI SDKs), use `observeAsyncItera
 
 ```ts
 import { wrapLanguageModel } from "ai";
-import { fallbackMiddleware } from "llm-fallback/adapters/ai-sdk";
+import { fallbackMiddleware } from "fallback-llm/adapters/ai-sdk";
 
 const model = wrapLanguageModel({
   model: openai("gpt-4o"),
@@ -103,7 +103,7 @@ const model = wrapLanguageModel({
 ### LangChain
 
 ```ts
-import { withFallbackRunnable } from "llm-fallback/adapters/langchain";
+import { withFallbackRunnable } from "fallback-llm/adapters/langchain";
 
 const chain = withFallbackRunnable(
   [
