@@ -33,7 +33,7 @@ Unknown errors are treated as transient (attempts are bounded, failover follows)
 ## Install
 
 ```bash
-npm install llm-fallback
+npm install @richardsondx/llm-fallback
 ```
 
 ## Usage
